@@ -15,6 +15,9 @@ class User(AbstractUser):
 
     objects = CustomUserManager()
 
+    class Meta:
+        db_table = 'store_users'
+
     def __str__(self):
         return self.email
 
