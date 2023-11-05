@@ -6,17 +6,44 @@ A simple online store API with DRF
 
 - Clone the repo
 
-- Create a virtual environment `python3 -m venv venv` and activate it `. /venv/bin/activate`
+- Create a virtual environment and activate it
+
+```sh
+python -m venv venv && . venv/bin/activate
+```
+
+- Install the development dependencies
+
+```sh
+pip install --upgrade pip
+pip install -r requirements/dev.txt
+```
 
 - Creata a **.env** file and fill results from **.env_example**
 
-- Source the environment variables `source .env`
+```sh
+touch .env
+cp .env.example .env
+source .env
+```
 
-- Run migrations `python manage.py migrate`
+- Run migrations
 
-- Run server locally `python manage.py runserver`
+```sh
+python manage.py migrate
+```
 
-- Run tests `python manage.py test`
+- Run server
+
+```sh
+python manage.py runserver
+```
+
+- Run tests
+
+```sh
+python manage.py test
+```
 
 ## Tools
 
