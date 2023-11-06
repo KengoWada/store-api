@@ -19,30 +19,23 @@ pip install --upgrade pip
 pip install -r requirements/dev.txt
 ```
 
-- Creata a **.env** file and fill results from **.env_example**
+- Creata a **.env** directory and create the following files:
+
+  - `.django.env`
+  - `.postgres.env`
 
 ```sh
-touch .env
-cp .env.example .env
-source .env
+mkdir .env
+touch .env/.django.env
+touch .env/.postgres.env
 ```
 
-- Run migrations
+- Fill in the **.env** files from **.env.example**
+
+- Start server
 
 ```sh
-python manage.py migrate
-```
-
-- Run server
-
-```sh
-python manage.py runserver
-```
-
-- Run tests
-
-```sh
-python manage.py test
+sudo make buildup
 ```
 
 ## Tools
@@ -50,3 +43,5 @@ python manage.py test
 - Django
 
 - PostgreSQL
+
+- Docker
