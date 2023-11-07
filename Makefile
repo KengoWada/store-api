@@ -17,3 +17,7 @@ kill:
 .PHONY: createsuperuser
 createsuperuser:
 	docker compose -f docker-compose.yaml run api python manage.py createsuperuser
+
+.PHONY: test
+test:
+	docker compose -f docker-compose.yaml run api python manage.py test $(APP)
