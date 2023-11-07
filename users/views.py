@@ -1,63 +1,36 @@
+from http import HTTPStatus
+
 from django.contrib.auth import authenticate
-from rest_framework import permissions, status
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_simplejwt.authentication import JWTAuthentication
+
+from users.serializers import UserSerializer
 
 
-from .serializers import UserSerializer
-from .permissions import IsAuthenticatedOrCreateOnly
-
-
-@api_view(['POST'])
-def login_user(request):
-    email = request.data.get('email', None)
-    password = request.data.get('password', None)
-
-    user = authenticate(email=email, password=password)
-    if not user:
-        response = {'message': 'Invalid credentials'}
-        return Response(response, status=status.HTTP_400_BAD_REQUEST)
-
-    serializer = UserSerializer(user)
-    tokens = user.get_tokens()
-
-    response = {'message': 'User logged in', 'user': serializer.data,
-                'access_token': tokens['access'], 'refresh_token': tokens['refresh']}
-    return Response(response, status=status.HTTP_200_OK)
-
-
-class UserAPIView(APIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticatedOrCreateOnly]
-
-    def post(self, request):
+class RegisterUserAPIView(APIView):
+    def post(self, request, *args, **kwargs):
         serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
+        if not serializer.is_valid():
+            response = {"error": serializer.errors}
+            return Response(response, status=HTTPStatus.BAD_REQUEST)
 
-        # TODO: send out an email
+        serializer.save()
+        # TODO: Send verification email.
+        response = {"message": "Done"}
+        return Response(response, status=HTTPStatus.CREATED)
 
-        response = {'message': 'Done', 'user': serializer.data}
-        return Response(response, status=status.HTTP_200_OK)
 
-    def get(self, request):
-        serializer = UserSerializer(request.user)
+class LoginUserAPIView(APIView):
+    def post(self, request, *args, **kwargs):
+        email = request.data.get("email")
+        password = request.data.get("password")
 
-        response = serializer.data
-        return Response(response, status=status.HTTP_200_OK)
+        user = authenticate(email=email, password=password)
+        if not user:
+            response = {"error": "Invalid credentials"}
+            return Response(response, status=HTTPStatus.BAD_REQUEST)
 
-    def put(self, request):
-        request.user.update(request.data)
-
-        serializer = UserSerializer(request.user)
-
-        response = {'message': 'Done', 'user': serializer.data}
-        return Response(response, status=status.HTTP_200_OK)
-
-    def delete(self, request):
-        request.user.delete()
-
-        response = {'message': 'Done'}
-        return Response(response, status=status.HTTP_200_OK)
+        tokens = user.get_auth_tokens()
+        serializer = UserSerializer(user)
+        response = {"message": "Done", "user": serializer.data, **tokens}
+        return Response(response, status=HTTPStatus.OK)
