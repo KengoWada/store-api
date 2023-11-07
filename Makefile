@@ -13,3 +13,7 @@ down:
 .PHONY: kill
 kill:
 	docker compose -f docker-compose.yaml down -v
+
+.PHONY: createsuperuser
+createsuperuser:
+	docker compose -f docker-compose.yaml run api python manage.py createsuperuser
