@@ -2,35 +2,26 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .managers import CustomUserManager
+from core.models import BaseModel
+from users.managers import UserManager
 
 
-class User(AbstractUser):
+class User(AbstractUser, BaseModel):
     username = None
+    date_joined = None
+    first_name = None
+    last_name = None
+    name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
-    date_joined = models.DateTimeField(auto_now_add=True)
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
-    objects = CustomUserManager()
-
-    class Meta:
-        db_table = 'store_users'
+    objects = UserManager()
 
     def __str__(self):
-        return self.email
+        return f"{self.email}"
 
-    def get_tokens(self):
-        refresh = RefreshToken.for_user(self)
-
-        return {
-            'refresh': str(refresh),
-            'access': str(refresh.access_token),
-        }
-
-    def update(self, data):
-        for field in ['first_name', 'last_name']:
-            if field in data:
-                setattr(self, field, data[field])
-        self.save()
+    def get_auth_tokens(self):
+        tokens = RefreshToken.for_user(self)
+        return {"refresh_token": str(tokens), "access_token": str(tokens.access_token)}
