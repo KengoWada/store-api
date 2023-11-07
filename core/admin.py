@@ -4,8 +4,10 @@ from simple_history.admin import SimpleHistoryAdmin
 
 
 class BaseModelAdmin(SimpleHistoryAdmin):
+    """Base model admin to include changed_fields and list_changes."""
+
     actions = ["mark_as_read"]
-    history_list_display = ["changed_fields","list_changes"]
+    history_list_display = ["changed_fields", "list_changes"]
 
     def changed_fields(self, obj):
         if obj.prev_record:
@@ -28,5 +30,5 @@ class BaseModelAdmin(SimpleHistoryAdmin):
         return None
 
     @admin.action(description="Mark selected objects as removed.")
-    def mark_as_read(self, request, queryset):
+    def mark_as_removed(self, request, queryset):
         queryset.update(is_removed=True)
