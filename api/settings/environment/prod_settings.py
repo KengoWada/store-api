@@ -9,6 +9,17 @@ DEBUG = False
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
 
+# SMTP BACKEND https://docs.djangoproject.com/en/4.2/topics/email/#smtp-backend
+EMAIL_HOST = config("EMAIL_HOST")
+
+EMAIL_PORT = config("EMAIL_PORT")
+
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+
+EMAIL_USE_TLS = True
+
 
 # ===============================
 # DJANGO REST FRAMEWORK SETTINGS
