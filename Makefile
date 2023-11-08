@@ -6,6 +6,10 @@ buildup:
 up:
 	docker compose -f docker-compose.yaml up $(OPTIONS)
 
+.PHONY: build
+build:
+	docker compose -f docker-compose.yaml build
+
 .PHONY: down
 down:
 	docker compose -f docker-compose.yaml down
