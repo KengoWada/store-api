@@ -35,8 +35,29 @@ touch .env/.postgres.env
 - Start server
 
 ```sh
-sudo make buildup
+make buildup
 ```
+
+- Run tests
+
+```sh
+# Run all tests
+make test
+
+# Run specific tests
+make test APP=users.tests.test_models
+
+# Run coverage tests
+make coverage-run
+
+# Run coverage report
+make coverage-report
+
+# Run coverage HTML report
+make coverage-html
+```
+
+**NOTE:** When using `make` commands, you may need to prepend `sudo`.
 
 ## Tools
 
