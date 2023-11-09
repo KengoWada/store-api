@@ -40,6 +40,10 @@ class LoginUserAPIView(APIView):
             response = {"error": "Invalid credentials"}
             return Response(response, status=HTTPStatus.BAD_REQUEST)
 
+        if not user.is_email_verified:
+            response = {"error": "Please verify your email address to continue."}
+            return Response(response, status=HTTPStatus.FORBIDDEN)
+
         tokens = user.get_auth_tokens()
         serializer = UserSerializer(user)
         response = {"message": "Done", "user": serializer.data, **tokens}
