@@ -5,9 +5,15 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from users.serializers import UserSerializer
+from users.utils import send_email_verification_email
+
+__all__ = ("RegisterUserAPIView", "LoginUserAPIView")
 
 
 class RegisterUserAPIView(APIView):
+    email_subject = "Welcome to Online Store API"
+    email_template = "welcome.html"
+
     def post(self, request, *args, **kwargs):
         serializer = UserSerializer(data=request.data)
         if not serializer.is_valid():
@@ -15,7 +21,11 @@ class RegisterUserAPIView(APIView):
             return Response(response, status=HTTPStatus.BAD_REQUEST)
 
         serializer.save()
-        # TODO: Send verification email.
+        user = serializer.data
+        send_email_verification_email(
+            user["name"], user["email"], self.email_subject, self.email_template
+        )
+
         response = {"message": "Done"}
         return Response(response, status=HTTPStatus.CREATED)
 
