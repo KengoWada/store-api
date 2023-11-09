@@ -18,17 +18,25 @@ class UserManager(DjangoUserManager):
         return user
 
     def create_user(self, email, password, **extra_fields):
+        extra_fields.setdefault("is_email_verified", False)
         extra_fields.setdefault("is_staff", False)
         extra_fields.setdefault("is_superuser", False)
         return self._create_user(email, password, **extra_fields)
 
     def create_superuser(self, email, password, **extra_fields):
+        extra_fields.setdefault("is_email_verified", True)
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
+        if extra_fields.get("is_email_verified") is not True:
+            raise ValueError(
+                "Superuser must have is_email_verified=True"
+            )  # pragma: no cover
         if extra_fields.get("is_staff") is not True:
-            raise ValueError("Superuser must have is_staff=True.") # pragma: no cover
+            raise ValueError("Superuser must have is_staff=True.")  # pragma: no cover
         if extra_fields.get("is_superuser") is not True:
-            raise ValueError("Superuser must have is_superuser=True.") # pragma: no cover
+            raise ValueError(
+                "Superuser must have is_superuser=True."
+            )  # pragma: no cover
 
         return self._create_user(email, password, **extra_fields)

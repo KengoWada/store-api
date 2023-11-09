@@ -13,6 +13,11 @@ class User(AbstractUser, BaseModel):
     last_name = None
     name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
+    is_email_verified = models.BooleanField(
+        default=False,
+        verbose_name="Email Verified",
+        help_text="Designates whether the users email address has been verified or not.",
+    )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
