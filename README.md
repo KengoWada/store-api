@@ -32,6 +32,13 @@ touch .env/.postgres.env
 
 - Fill in the **.env** files from **.env.example**
 
+- Create **local_settings.py** from **local_settings.py.template**
+
+```sh
+touch api/settings/environment/local_settings.py
+cp api/settings/environment/local_settings.py.template api/settings/environment/local_settings.py
+```
+
 - Start server
 
 ```sh
