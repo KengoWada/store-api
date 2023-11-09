@@ -88,3 +88,7 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
     "django.contrib.auth.hashers.ScryptPasswordHasher",
 ]
+
+
+ITSDANGEROUS_SECRET_KEY = config("ITSDANGEROUS_SECRET_KEY")
+ITSDANGEROUS_SALT_KEY = config("ITSDANGEROUS_SALT_KEY")
