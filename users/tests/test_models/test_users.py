@@ -28,6 +28,7 @@ class UserModelTestCase(TestCase):
         self.assertEqual(user.email, email)
         self.assertEqual(user.name, self.name)
         self.assertTrue(user.is_active)
+        self.assertFalse(user.is_email_verified)
         self.assertFalse(user.is_staff)
         self.assertFalse(user.is_superuser)
 
@@ -51,5 +52,6 @@ class UserModelTestCase(TestCase):
         self.assertEqual(user.name, name)
         self.assertEqual(user.email, email)
         self.assertTrue(user.is_active)
+        self.assertTrue(user.is_email_verified)
         self.assertTrue(user.is_staff)
         self.assertTrue(user.is_superuser)
