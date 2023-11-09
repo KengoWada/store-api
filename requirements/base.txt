@@ -6,5 +6,6 @@ django-simple-history==3.4.0
 django-split-settings==1.2.0
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.3.0
+itsdangerous==2.1.2
 psycopg==3.1.12
 python-decouple==3.8
