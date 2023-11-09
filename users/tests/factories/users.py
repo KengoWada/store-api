@@ -11,6 +11,8 @@ class UserFactory(factory.django.DjangoModelFactory):
     email = factory.Faker("email")
     name = factory.Sequence(lambda n: f"name {n}")
     password = make_password("longpassword")
+    is_email_verified = False
+    is_active = True
 
     class Meta:
         model = User
