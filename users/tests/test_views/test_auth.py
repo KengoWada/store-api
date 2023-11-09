@@ -41,7 +41,9 @@ class RegisterUserAPIViewTestCase(APITestCase):
 
 class LoginUserAPIViewTestCase(APITestCase):
     def setUp(self):
-        self.user = UserFactory()
+        self.user = UserFactory(is_email_verified=True)
+        self.user_2 = UserFactory()
+        self.user_3 = UserFactory(is_active=False)
         self.url = reverse("login-user")
 
     def test_login_user(self):
@@ -56,6 +58,26 @@ class LoginUserAPIViewTestCase(APITestCase):
 
     def test_login_user_invalid_request(self):
         data = {"email": "fake@email.com", "password": "longpassword"}
+        response = self.client.post(self.url, data=data, format="json")
+        self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
+
+        response_data = response.json()
+        self.assertCountEqual(response_data.keys(), ["error"])
+        self.assertEqual(response_data["error"], "Invalid credentials")
+
+    def test_login_user_email_not_verified(self):
+        data = {"email": self.user_2.email, "password": "longpassword"}
+        response = self.client.post(self.url, data=data, format="json")
+        self.assertEqual(response.status_code, HTTPStatus.FORBIDDEN)
+
+        response_data = response.json()
+        self.assertCountEqual(response_data.keys(), ["error"])
+        self.assertEqual(
+            response_data["error"], "Please verify your email address to continue."
+        )
+
+    def test_login_user_not_active(self):
+        data = {"email": self.user_3.email, "password": "longpassword"}
         response = self.client.post(self.url, data=data, format="json")
         self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
 
