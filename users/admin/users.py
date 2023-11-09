@@ -26,6 +26,7 @@ class UserModelAdmin(UserAdmin, BaseModelAdmin):
             {
                 "fields": (
                     "is_active",
+                    "is_email_verified",
                     "is_staff",
                     "is_superuser",
                     "is_removed",
@@ -45,6 +46,7 @@ class UserModelAdmin(UserAdmin, BaseModelAdmin):
             {
                 "fields": (
                     "is_active",
+                    "is_email_verified",
                     "is_staff",
                     "is_superuser",
                     "is_removed",
@@ -67,6 +69,7 @@ class UserModelAdmin(UserAdmin, BaseModelAdmin):
         "is_staff",
         "is_superuser",
         "is_active",
+        "is_email_verified",
         "is_removed",
     )
 
