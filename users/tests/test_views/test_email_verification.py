@@ -4,6 +4,7 @@ from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
 
 from core.utils import generate_token
+
 from users.tests.factories import UserFactory
 
 

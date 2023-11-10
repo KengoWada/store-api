@@ -1,9 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.forms import \
-    UserCreationForm as DjangoUserCreationForm
+from django.contrib.auth.forms import UserCreationForm as DjangoUserCreationForm
 
 from core.admin import BaseModelAdmin
+
 from users.models import User
 
 __all__ = ("UserModelAdmin",)

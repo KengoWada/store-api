@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.mail import EmailMessage
+
 from itsdangerous import URLSafeTimedSerializer
 from itsdangerous.exc import BadData
 
