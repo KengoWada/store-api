@@ -3,8 +3,7 @@ from simple_history.models import HistoricalRecords
 
 
 class BaseModel(models.Model):
-    """
-    Base model for all models in the app.
+    """Base model for all models in the app.
 
     Attributes
     ----------

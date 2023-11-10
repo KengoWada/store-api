@@ -10,10 +10,14 @@ TOKEN_SERIALIZER = URLSafeTimedSerializer(settings.ITSDANGEROUS_SECRET_KEY)
 def send_email(subject: str, body: str, to_emails: list[str]):
     """Send emails from EMAIL_HOST_USER.
 
-    Args:
-        subject (str): The email subject.
-        body (str): The email body.
-        to_emails (list[str]): A list of email addresses to send the email to.
+    Parameters
+    ----------
+    subject : str
+        The email subject.
+    body : str
+        The email body.
+    to_emails : list[str]
+        A list of email addresses to send the email to.
     """
     email = EmailMessage(
         subject=subject, body=body, to=to_emails, from_email=FROM_EMAIL
@@ -25,11 +29,15 @@ def send_email(subject: str, body: str, to_emails: list[str]):
 def generate_token(data: str):
     """Generate signed token for data provided.
 
-    Args:
-        data (str): Data to be signed.
+    Parameters
+    ----------
+    data : str
+        Data to be signed.
 
-    Returns:
-        token (str): A signed token for the data provided.
+    Returns
+    -------
+    str
+        A signed token for the data provided.
     """
     return TOKEN_SERIALIZER.dumps(data, salt=settings.ITSDANGEROUS_SALT_KEY)
 
@@ -37,12 +45,19 @@ def generate_token(data: str):
 def verify_token(token: str, expiration=1800):
     """Verify token validity.
 
-    Args:
-        token (str): Token to be verified.
-        expiration (int, optional): The time in seconds that the token is valid. Defaults to 1800.
+    Parameters
+    ----------
+    token : str
+        Token to be verified.
+    expiration : int, optional
+        The time in seconds that the token is valid. Defaults to 1800.
 
-    Returns:
-        data (str, None): Data that was signed to the token if valid otherwise returns None.
+    Returns
+    -------
+    str
+        Data that was signed to the token.
+    None
+        If token is invlaid.
     """
     try:
         return TOKEN_SERIALIZER.loads(
