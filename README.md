@@ -19,6 +19,12 @@ pip install --upgrade pip
 pip install -r requirements/dev.txt
 ```
 
+- Add **pre-commit** hooks
+
+```sh
+pre-commit install
+```
+
 - Creata a **.env** directory and create the following files:
 
   - `.django.env`
