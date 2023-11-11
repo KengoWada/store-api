@@ -17,10 +17,10 @@ class UserCreationForm(DjangoUserCreationForm):
 
 @admin.register(User)
 class UserModelAdmin(UserAdmin, BaseModelAdmin):
-    readonly_fields = ("created_at", "updated_at")
+    readonly_fields = ("password_reset_token", "created_at", "updated_at")
 
     fieldsets = (
-        (None, {"fields": ("name", "email", "password")}),
+        (None, {"fields": ("name", "email", "password", "password_reset_token")}),
         (
             "Permissions",
             {
