@@ -14,4 +14,6 @@ urlpatterns = [
         views.resend_email_verification_email,
         name="resend-email-verification-email",
     ),
+    path("password/forgot/", views.forgot_password, name="forgot-password"),
+    path("password/reset/", views.reset_password, name="reset-password"),
 ]
