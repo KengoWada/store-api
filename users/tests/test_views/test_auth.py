@@ -17,7 +17,7 @@ class RegisterUserAPIViewTestCase(APITestCase):
         data = {
             "email": "first.person@email.com",
             "name": "First Person",
-            "password": "longpassword",
+            "password": "l0ngPassword@",
         }
         response = self.client.post(self.url, data=data, format="json")
         self.assertEqual(response.status_code, HTTPStatus.CREATED)
@@ -28,7 +28,7 @@ class RegisterUserAPIViewTestCase(APITestCase):
         self.assertTrue(User.objects.filter(email=data["email"]).exists())
 
     def test_register_user_invalid_request(self):
-        data = {"name": "First Person", "password": "longpassword"}
+        data = {"name": "First Person", "password": "l0ngPassword@"}
         response = self.client.post(self.url, data=data, format="json")
         self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
 
