@@ -17,14 +17,13 @@ def resend_email_verification_email(request):
     email = request.data.get("email")
 
     user = User.objects.filter(email=email).first()
-    if user and not user.is_email_verified:
+    if user and not user.is_email_verified and user.is_active:
         subject = "Please Verify Your Email Address"
         send_email_verification_email(
             user.name,
             user.email,
             subject,
-            # TODO: Add resend email address verification template.
-            "welcome.html",
+            "verify_email.html",
         )
 
     response = {"message": "An email has been sent."}
@@ -42,7 +41,7 @@ def verify_email_address(request):
         return Response(response, status=HTTPStatus.BAD_REQUEST)
 
     user = User.objects.filter(email=email).first()
-    if user:
+    if user and not user.is_email_verified and user.is_active:
         user.is_email_verified = True
         user.save(update_fields=["is_email_verified"])
 
