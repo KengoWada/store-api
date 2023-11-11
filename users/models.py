@@ -31,6 +31,7 @@ class User(AbstractUser, BaseModel):
     get_auth_tokens ()
         Returns auth tokens for the user.
     """
+
     username = None
     date_joined = None
     first_name = None
@@ -42,6 +43,7 @@ class User(AbstractUser, BaseModel):
         verbose_name="Email Verified",
         help_text="Designates whether the users email address has been verified or not.",
     )
+    password_reset_token = models.CharField(max_length=255, null=True, blank=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
