@@ -1,5 +1,6 @@
 from http import HTTPStatus
 
+from django.urls import path
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -7,8 +8,6 @@ from core.utils import verify_token
 
 from users.models import User
 from users.utils import send_email_verification_email
-
-__all__ = ("resend_email_verification_email", "verify_email_address")
 
 
 @api_view(["POST"])
@@ -47,3 +46,13 @@ def verify_email_address(request):
 
     response = {"message": "Done"}
     return Response(response, status=HTTPStatus.OK)
+
+
+urlpatterns = [
+    path("email/verify/", verify_email_address, name="verify-email-address"),
+    path(
+        "email/resend/",
+        resend_email_verification_email,
+        name="resend-email-verification-email",
+    ),
+]

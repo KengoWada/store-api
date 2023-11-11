@@ -1,5 +1,6 @@
 from http import HTTPStatus
 
+from django.urls import path
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -8,8 +9,6 @@ from core.utils import generate_token, verify_token
 from users.models import User
 from users.serializers import UserSerializer
 from users.utils import send_forgot_password_email
-
-__all__ = ("reset_password", "forgot_password")
 
 
 @api_view(["PATCH"])
@@ -50,3 +49,9 @@ def forgot_password(request):
 
     response = {"message": "Done"}
     return Response(response, status=HTTPStatus.OK)
+
+
+urlpatterns = [
+    path("password/forgot/", forgot_password, name="forgot-password"),
+    path("password/reset/", reset_password, name="reset-password"),
+]

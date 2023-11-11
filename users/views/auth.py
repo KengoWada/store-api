@@ -1,13 +1,12 @@
 from http import HTTPStatus
 
 from django.contrib.auth import authenticate
+from django.urls import path
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from users.serializers import UserSerializer
 from users.utils import send_email_verification_email
-
-__all__ = ("RegisterUserAPIView", "LoginUserAPIView")
 
 
 class RegisterUserAPIView(APIView):
@@ -48,3 +47,9 @@ class LoginUserAPIView(APIView):
         serializer = UserSerializer(user)
         response = {"message": "Done", "user": serializer.data, **tokens}
         return Response(response, status=HTTPStatus.OK)
+
+
+urlpatterns = [
+    path("register/", RegisterUserAPIView.as_view(), name="register-user"),
+    path("login/", LoginUserAPIView.as_view(), name="login-user"),
+]
