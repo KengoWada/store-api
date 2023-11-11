@@ -20,6 +20,15 @@ EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 
 EMAIL_USE_TLS = True
 
+# ADMIN SITE https://docs.djangoproject.com/en/4.2/ref/contrib/admin/#adminsite-attributes
+ADMIN_SITE_HEADER = config("ADMIN_SITE_HEADER")
+
+ADMIN_SITE_TITLE = config("ADMIN_SITE_TITLE")
+
+ADMIN_INDEX_TITLE = config("ADMIN_INDEX_TITLE")
+
+ADMIN_URL = config("ADMIN_URL")
+
 
 # ===============================
 # DJANGO REST FRAMEWORK SETTINGS
