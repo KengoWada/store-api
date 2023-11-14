@@ -22,6 +22,10 @@ kill:
 createsuperuser:
 	docker compose -f docker-compose.yaml run api python manage.py createsuperuser
 
+.PHONY: shell
+shell:
+	docker compose -f docker-compose.yaml run api python manage.py shell
+
 .PHONY: test
 test:
 	docker compose -f docker-compose.yaml run -e DJANGO_ENV="TESTING" api python manage.py test $(APP)
