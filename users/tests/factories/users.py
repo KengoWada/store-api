@@ -14,6 +14,7 @@ class UserFactory(factory.django.DjangoModelFactory):
     password = make_password("longpassword")
     is_email_verified = False
     is_active = True
+    is_staff = False
 
     class Meta:
         model = User
