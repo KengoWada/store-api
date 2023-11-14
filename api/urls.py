@@ -15,8 +15,8 @@ if ENV == "PROD":
 
 
 urlpatterns = [
-    path("auth/", include("users.urls", namespace="auth")),
-    # path('products/', include('products.urls')),
+    path("auth/", include(("users.urls", "users"), namespace="auth")),
+    path("products/", include(("products.urls", "products"), namespace="products")),
 ]
 
 if ENV != "TESTING":
