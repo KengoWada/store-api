@@ -2,6 +2,8 @@ from datetime import timedelta
 
 from decouple import Csv, config
 
+from api.settings.components.drf_settings import REST_FRAMEWORK, SIMPLE_JWT
+
 # ================
 # DJANGO SETTINGS
 # ================

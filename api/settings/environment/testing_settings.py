@@ -1,3 +1,5 @@
+from api.settings.components.drf_settings import REST_FRAMEWORK
+
 # ================
 # DJANGO SETTINGS
 # ================
