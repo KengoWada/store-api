@@ -12,7 +12,7 @@ from users.tests.factories import UserFactory
 class ResetPasswordAPIViewTestCase(APITestCase):
     def setUp(self):
         self.user = UserFactory(is_email_verified=True)
-        self.url = reverse("reset-password")
+        self.url = reverse("auth:reset-password")
 
     def assign_user_password_reset_token(self):
         token = generate_token(self.user.email)
@@ -61,7 +61,7 @@ class ResetPasswordAPIViewTestCase(APITestCase):
 class ForgotPasswordAPIViewTestCase(APITestCase):
     def setUp(self):
         self.user = UserFactory()
-        self.url = reverse("forgot-password")
+        self.url = reverse("auth:forgot-password")
 
     def test_forgot_password(self):
         self.assertFalse(self.user.password_reset_token)

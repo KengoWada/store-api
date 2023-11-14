@@ -11,7 +11,7 @@ User = get_user_model()
 
 class RegisterUserAPIViewTestCase(APITestCase):
     def setUp(self):
-        self.url = reverse("register-user")
+        self.url = reverse("auth:register-user")
 
     def test_register_user(self):
         data = {
@@ -44,7 +44,7 @@ class LoginUserAPIViewTestCase(APITestCase):
         self.user = UserFactory(is_email_verified=True)
         self.user_2 = UserFactory()
         self.user_3 = UserFactory(is_active=False)
-        self.url = reverse("login-user")
+        self.url = reverse("auth:login-user")
 
     def test_login_user(self):
         data = {"email": self.user.email, "password": "longpassword"}

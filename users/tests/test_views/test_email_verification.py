@@ -11,7 +11,7 @@ from users.tests.factories import UserFactory
 class VerifyEmailAddressAPIViewTestCase(APITestCase):
     def setUp(self):
         self.user = UserFactory()
-        self.url = reverse("verify-email-address")
+        self.url = reverse("auth:verify-email-address")
 
     def test_verify_email_address(self):
         self.assertFalse(self.user.is_email_verified)
@@ -40,7 +40,7 @@ class VerifyEmailAddressAPIViewTestCase(APITestCase):
 class ResendEmailAddressVerificationEmailAPIViewTestCase(APITestCase):
     def setUp(self):
         self.user = UserFactory()
-        self.url = reverse("resend-email-verification-email")
+        self.url = reverse("auth:resend-email-verification-email")
 
     def test_resend_email_address_verification_email(self):
         data = {"email": self.user.email}
