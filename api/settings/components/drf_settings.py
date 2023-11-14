@@ -13,6 +13,7 @@ REST_FRAMEWORK = {
         "rest_framework.throttling.AnonRateThrottle",
         "rest_framework.throttling.UserRateThrottle",
     ],
+    "EXCEPTION_HANDLER": "core.exception_handlers.exception_handler",
 }
 
 
