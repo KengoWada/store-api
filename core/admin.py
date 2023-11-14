@@ -7,6 +7,8 @@ from simple_history.admin import SimpleHistoryAdmin
 class BaseModelAdmin(SimpleHistoryAdmin):
     """Base model admin to include changed_fields and list_changes."""
 
+    READONLY_FIELDS = ["created_at", "updated_at"]
+
     actions = ["mark_as_read"]
     history_list_display = ["changed_fields", "list_changes"]
 
