@@ -17,7 +17,7 @@ INSTALLED_APPS = [
     "simple_history",
     "rest_framework_simplejwt.token_blacklist",
     "users",
-    # "products",
+    "products",
 ]
 
 AUTH_USER_MODEL = "users.User"
