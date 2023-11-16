@@ -5,14 +5,12 @@ from rest_framework.response import Response
 
 from core.mixins import StaffOrReadOnlyAPIViewMixin
 from core.pagination import ResultSetPagination
-from core.permissions import IsStaffOrReadOnly
 
 from products.models import Product
 from products.serializers import ProductSerializer
 
 
 class ProductCreateListAPIView(StaffOrReadOnlyAPIViewMixin):
-    permission_classes = [IsStaffOrReadOnly]
     paginator = ResultSetPagination()
 
     def post(self, request, *args, **kwargs):
@@ -40,8 +38,6 @@ class ProductCreateListAPIView(StaffOrReadOnlyAPIViewMixin):
 
 
 class ProductDetailsUpdateAPIView(StaffOrReadOnlyAPIViewMixin):
-    permission_classes = [IsStaffOrReadOnly]
-
     def get(self, request, *args, **kwargs):
         product_id = kwargs.get("id")
         is_staff = request.user.is_authenticated and request.user.is_staff
