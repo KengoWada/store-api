@@ -4,7 +4,7 @@ from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
 
 from products.serializers import ProductSerializer
-from products.tests.factories import ProductFactory
+from products.tests.factories import CategoryFactory, ProductFactory
 from users.tests.factories import UserFactory
 
 
@@ -12,8 +12,9 @@ class ProductDetailsUpdateAPIViewTestCase(APITestCase):
     def setUp(self):
         self.staff_user = UserFactory(is_staff=True)
         self.user = UserFactory()
-        self.product = ProductFactory(is_removed=False)
-        self.removed_product = ProductFactory(is_removed=True)
+        self.category = CategoryFactory(is_removed=False)
+        self.product = ProductFactory(category=self.category, is_removed=False)
+        self.removed_product = ProductFactory(category=self.category, is_removed=True)
         self.url = reverse("products:product-details-update", args=[self.product.pk])
         self.removed_url = reverse(
             "products:product-details-update", args=[self.removed_product.pk]
@@ -39,6 +40,7 @@ class ProductDetailsUpdateAPIViewTestCase(APITestCase):
         self.assertEqual(product["quantity"], self.product.quantity)
         self.assertCountEqual(product["images"], self.product.images)
         self.assertFalse(product["is_discounted"])
+        self.assertEqual(product["category"], self.category.name)
 
     def test_get_product_details_invalid_id(self):
         # Test getting prouct with wrong id.
@@ -75,6 +77,7 @@ class ProductDetailsUpdateAPIViewTestCase(APITestCase):
         self.assertEqual(product["quantity"], self.removed_product.quantity)
         self.assertCountEqual(product["images"], self.removed_product.images)
         self.assertFalse(product["is_discounted"])
+        self.assertEqual(product["category"], self.category.name)
 
     def test_update_product_details(self):
         data = {"name": "Update Product Name", "discount_price": "950.00"}

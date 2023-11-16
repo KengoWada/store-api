@@ -3,7 +3,7 @@ from http import HTTPStatus
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
 
-from products.tests.factories import ProductFactory
+from products.tests.factories import CategoryFactory, ProductFactory
 from users.tests.factories import UserFactory
 
 
@@ -11,6 +11,7 @@ class ProductCreateListAPIViewTestCase(APITestCase):
     def setUp(self):
         self.staff_user = UserFactory(is_staff=True)
         self.user = UserFactory()
+        self.category = CategoryFactory(is_removed=False)
         self.url = reverse("products:products-create-list")
 
     def test_create_product(self):
@@ -20,6 +21,7 @@ class ProductCreateListAPIViewTestCase(APITestCase):
             "price": 1200.00,
             "quantity": 23,
             "images": ["https://localhost:3000/image.png"],
+            "category": self.category.pk,
         }
         self.client.force_authenticate(user=self.staff_user)
         response = self.client.post(self.url, data=data, format="json")
@@ -33,6 +35,7 @@ class ProductCreateListAPIViewTestCase(APITestCase):
         self.assertEqual(response_data["product"]["price"], f"{data['price']:.2f}")
         self.assertEqual(response_data["product"]["quantity"], data["quantity"])
         self.assertEqual(response_data["product"]["images"], data["images"])
+        self.assertEqual(response_data["product"]["category"], self.category.name)
 
     def test_create_product_invalid_data(self):
         data = {
@@ -40,6 +43,7 @@ class ProductCreateListAPIViewTestCase(APITestCase):
             "price": 1200.00,
             "quantity": 23,
             "images": ["https://localhost:3000/image.png"],
+            "category": self.category.pk,
         }
         self.client.force_authenticate(user=self.staff_user)
         response = self.client.post(self.url, data=data, format="json")
@@ -56,6 +60,7 @@ class ProductCreateListAPIViewTestCase(APITestCase):
             "price": 1200.00,
             "quantity": 23,
             "images": ["https://localhost:3000/image.png"],
+            "category": self.category.pk,
         }
         response = self.client.post(self.url, data=data, format="json")
         self.assertEqual(response.status_code, HTTPStatus.UNAUTHORIZED)
@@ -73,6 +78,7 @@ class ProductCreateListAPIViewTestCase(APITestCase):
             "price": 1200.00,
             "quantity": 23,
             "images": ["https://localhost:3000/image.png"],
+            "category": self.category.pk,
         }
         self.client.force_authenticate(user=self.user)
         response = self.client.post(self.url, data=data, format="json")
