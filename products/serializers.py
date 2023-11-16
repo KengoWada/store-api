@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from products.models import Product
+from products.models import Category, Product
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -17,4 +17,21 @@ class ProductSerializer(serializers.ModelSerializer):
             "quantity",
             "images",
             "is_discounted",
+            "category",
         )
+        extra_kwargs = {"category": {"required": True}}
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        if instance.category:
+            data["category"] = (
+                instance.category.name if not instance.category.is_removed else None
+            )
+        return data
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ("id", "name", "description")
+        extra_kwargs = {"description": {"required": True}}
