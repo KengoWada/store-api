@@ -17,6 +17,9 @@ class Product(BaseModel):
     images = ArrayField(
         models.URLField(null=False, blank=False), null=False, blank=False
     )
+    category = models.ForeignKey(
+        "products.Category", null=True, on_delete=models.SET_NULL
+    )
 
     class Meta:
         db_table = "products"
@@ -28,3 +31,15 @@ class Product(BaseModel):
     @property
     def is_discounted(self):
         return self.discount_price > 0
+
+
+class Category(BaseModel):
+    name = models.CharField(max_length=255, null=False, blank=False)
+    description = models.TextField()
+
+    class Meta:
+        db_table = "product_categories"
+        verbose_name_plural = "Categories"
+
+    def __str__(self):
+        return f"{self.name}"
